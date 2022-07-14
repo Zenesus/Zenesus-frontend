@@ -114,14 +114,17 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text("Zenesus",style:  TextStyle(
             fontSize: 25,
             letterSpacing: 7,
             fontWeight: FontWeight.bold,
-            fontFamily: "Merriweather"
+            fontFamily: "Merriweather",
+
         ),
         ),
       ),
+      /*
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
@@ -136,111 +139,124 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Show me the value!',
         child: const Icon(Icons.text_fields),
       ),
+      */
       body: Center(
-
         child: Column(
-
-          children: <Widget>[
-            SizedBox(width: 350,height:450 ,
-              child:Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-
-                  const Spacer(flex: 3),
-                  Image.asset('assets/open-book.png',
-                    height: 225,
-                    width: 225,
+                  Expanded(
+                      flex: 3,
+                      child:Image.asset('assets/open-book.png',
+                        height: 225,
+                        width: 225,
+                      )
                   ),
-
-                  const Spacer(flex: 1),
 
                   DropdownButtonFormField(
-                      decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.school),
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)
-                          )
+                          decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.school),
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white)
+                              )
+                          ),
+                          value: _selectedHighschool,
+                          items: _dropdownMenuItems,
+                          onChanged: onChangeDropdownItem
                       ),
-                      value: _selectedHighschool,
-                      items: _dropdownMenuItems,
-                      onChanged: onChangeDropdownItem
-                  ),
 
-                  const Spacer(flex: 1),
-                  TextFormField(
-                      keyboardType: TextInputType.text,
-                      controller: usernameController,
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        hintText: "Enter your email",
-                        enabledBorder: _inputformdeco(),
-                        focusedBorder: _inputformdeco(),
-                      )
-                    ),
-                  const Spacer(flex: 1),
-                  TextFormField(
-                    keyboardType: TextInputType.text,
-                    controller: passwordController,
-                    obscureText: !_passwordVisible,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      hintText: 'Enter your password',
-                      enabledBorder: _inputformdeco(),
-                      focusedBorder: _inputformdeco(),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _passwordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: Theme.of(context).primaryColorDark,
-                        ),
-                        onPressed: () {
+                    const SizedBox(height:20),
+                    Column(
+                        children: <Widget>[
+                          TextFormField(
+                              keyboardType: TextInputType.text,
+                              controller: usernameController,
+                              decoration: InputDecoration(
+                                labelText: 'Email',
+                                hintText: "Enter your email",
+                                enabledBorder: _inputformdeco(),
+                                focusedBorder: _inputformdeco(),
+                              )
+                          ),
+                          const SizedBox(height:10),
+                          TextFormField(
+                            keyboardType: TextInputType.text,
+                            controller: passwordController,
+                            obscureText: !_passwordVisible,
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              hintText: 'Enter your password',
+                              enabledBorder: _inputformdeco(),
+                              focusedBorder: _inputformdeco(),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _passwordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Theme.of(context).primaryColorDark,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _passwordVisible = !_passwordVisible;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+
+                  ElevatedButton(
+                    onPressed: () async {
+
+                      if (_selectedHighschool.id !=0 && passwordController.text != "" && usernameController.text != ""){
+                        const url = 'http://10.0.2.2:5000/api/login';
+
+                        try{
+                          final post = await http.post(Uri.parse(url), body: json.encode(
+                              {'email' : "asdfasdfhjk",
+                                "password":"asdfadsf", 'highschool':"Montgomery Highschool",
+                                "mp":"MP2"}));
+
+                          //getting data from the python server script and assigning it to response
+                          final response = await http.get(Uri.parse(url));
+
+                          //converting the fetched data from json to key value pair that can be displayed on the screen
+                          final decoded = json.decode(response.body) as Map<String, dynamic>;
+
+                          //changing the UI be reassigning the fetched data to final response
                           setState(() {
-                            _passwordVisible = !_passwordVisible;
+                            final_response = decoded['name'];
                           });
-                        },
-                      ),
-                    ),
-                  ),
-                  const Spacer(flex: 1),
+                        }catch(error){
+                          print(error);
+                        }
+                        //sending a post request to the url
 
+                      }else{
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const AlertDialog(
+                              content: Text(
+                                  "Please make sure you selected/filled out all the fields",
+                                textAlign: TextAlign.center,
+                              ),
+                            );
+                          },
+                        );
+                      }
+
+                    },
+                    child: Text('GET'),
+                  ),
+                  const Spacer(flex:1),
                 ],
 
-              )
               ),
-            ElevatedButton(
-              onPressed: () async {
 
 
-                //url to send the get request to
-                const url = 'http://10.0.2.2:5000/api/login';
-
-
-                //sending a post request to the url
-                final post = await http.post(Uri.parse(url), body: json.encode(
-                    {'email' : "asdfasdfhjk",
-                      "password":"asdfadsf", 'highschool':"Montgomery Highschool",
-                      "mp":"MP2"}));
-
-                //getting data from the python server script and assigning it to response
-                final response = await http.get(Uri.parse(url));
-
-                //converting the fetched data from json to key value pair that can be displayed on the screen
-                final decoded = json.decode(response.body) as Map<String, dynamic>;
-
-                //changing the UI be reassigning the fetched data to final response
-                setState(() {
-                  final_response = decoded['name'];
-                });
-
-              },
-              child: Text('GET'),
-            ),
-
-          ],
         ),
-
-      ),
     );
   }
 
