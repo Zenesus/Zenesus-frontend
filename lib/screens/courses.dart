@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zenesus/screens/login.dart';
 
 class Courses extends StatefulWidget{
   const Courses({Key? key, required this.email, required this.password, required this.school}) : super(key: key);
@@ -15,7 +16,7 @@ class Courses extends StatefulWidget{
 
 class _courses extends State<Courses>{
   Map<String, dynamic> decoded = {};
-
+  Map<String, dynamic> code = {};
 
 
   @override
@@ -26,6 +27,14 @@ class _courses extends State<Courses>{
     final String school = widget.school;
 
     _fetchThings(email, password, school);
+
+    if(code['code']==69){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const MyLoginPage(incorrect: true,)),
+      );
+    }
+
   }
 
   void _fetchThings(String email, String password, String school) async {
@@ -37,11 +46,15 @@ class _courses extends State<Courses>{
           {'email' : email,
             "password":password, 'highschool':school,}));
 
-      //getting data from the python server script and assigning it to response
-      final response = await http.get(Uri.parse(url));
+      code = json.decode(post.body) as Map<String, dynamic>;
+      if(code['code']==420){
+        final response = await http.get(Uri.parse(url));
 
-      //converting the fetched data from json to key value pair that can be displayed on the screen
-      decoded = json.decode(response.body) as Map<String, dynamic>;
+        decoded = json.decode(response.body) as Map<String, dynamic>;
+      }
+
+
+
 
     }catch(error){
 

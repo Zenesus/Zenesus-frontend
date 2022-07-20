@@ -19,7 +19,8 @@ class Highschool{
 }
 
 class MyLoginPage extends StatefulWidget {
-  const MyLoginPage({Key? key}) : super(key: key);
+  const MyLoginPage({Key? key, required this.incorrect}) : super(key: key);
+  final bool incorrect;
 
   @override
   State<MyLoginPage> createState() => _Login();
@@ -38,6 +39,7 @@ class _Login extends State<MyLoginPage> {
     _dropdownMenuItems = buildDropdownMenuItems(_highschools);
     _selectedHighschool = _dropdownMenuItems[0].value!;
     super.initState();
+
   }
 
   List<DropdownMenuItem<Highschool>> buildDropdownMenuItems(List<Highschool> highschools) {
@@ -81,18 +83,36 @@ class _Login extends State<MyLoginPage> {
     );
   }
 
+  void showAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) =>
+        const AlertDialog(
+          content: Text(
+            "Incorrect password or username.",
+            textAlign: TextAlign.center,
+          ),
+
+        ));
+  }
   @override
   Widget build(BuildContext context) {
+    if(widget.incorrect){
+      Future.delayed(Duration.zero, () => showAlert(context));
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Zenesus",style:  TextStyle(
-          fontSize: 25,
-          letterSpacing: 7,
-          fontWeight: FontWeight.bold,
-          fontFamily: "Merriweather",
+        title:
+          const Text("Zenesus",
+            style:
+            TextStyle(
+                fontSize: 25,
+                letterSpacing: 7,
+                fontWeight: FontWeight.bold,
+                fontFamily: "Merriweather",
 
-        ),
+              ),
         ),
       ),
       /*
@@ -176,7 +196,7 @@ class _Login extends State<MyLoginPage> {
               ],
             ),
 
-
+            const SizedBox(height:20),
             ElevatedButton(
               onPressed: () async {
 
@@ -207,7 +227,7 @@ class _Login extends State<MyLoginPage> {
                 }
 
               },
-              child: Text('GET'),
+              child: const Text('Sign In'),
             ),
             const Spacer(flex:1),
           ],
