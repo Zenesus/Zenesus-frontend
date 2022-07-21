@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenesus/screens/login.dart';
+import 'package:zenesus/widgets/appbar.dart';
 
 class Courses extends StatefulWidget{
   const Courses({Key? key, required this.email, required this.password, required this.school}) : super(key: key);
@@ -17,7 +18,7 @@ class Courses extends StatefulWidget{
 class _courses extends State<Courses>{
   Map<String, dynamic> decoded = {};
   Map<String, dynamic> code = {};
-
+  String _selectedMenu = '';
 
   @override
   void initState() {
@@ -27,9 +28,6 @@ class _courses extends State<Courses>{
     final String school = widget.school;
 
     _fetchThings(email, password, school);
-
-
-
 
   }
 
@@ -51,8 +49,10 @@ class _courses extends State<Courses>{
         final response = await http.get(Uri.parse(url));
 
         decoded = json.decode(response.body) as Map<String, dynamic>;
-
-
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('email', email);
+        await prefs.setString('password', password);
+        await prefs.setString('school', school);
 
       }
 
@@ -69,34 +69,12 @@ class _courses extends State<Courses>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-            "Zenesus",
-            style: TextStyle(
-              fontSize: 25,
-              letterSpacing: 7,
-              fontWeight: FontWeight.bold,
-              fontFamily: "Merriweather",
-
-            ),
-          ),
-        ),
       body:Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-
-                  ElevatedButton(
-                      onPressed: (){
-                          Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const MyLoginPage(incorrect: false,)),
-                          );
-                      },
-                      child: const Text('Go back')
-                  ),
-
-                    const CircularProgressIndicator()
+                  CoursesAppbar(),
+                const CircularProgressIndicator()
 
               ],
           ),

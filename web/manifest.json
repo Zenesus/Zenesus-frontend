@@ -1,11 +1,11 @@
 {
-    "name": "genesos",
-    "short_name": "genesos",
+    "name": "zenesus",
+    "short_name": "zenesus",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "A gradebook app built for Montgomery Highschool",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

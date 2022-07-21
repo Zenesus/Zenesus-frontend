@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-
-import 'package:zenesus/screens/login.dart';
+import 'package:zenesus/screens/LoginGrades.dart';
+import 'package:zenesus/screens/testing.dart';
+import 'package:device_preview/device_preview.dart';
 
 Future<void> main() async{
+  
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  runApp(
+      MyApp()
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -14,12 +18,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+      // useInheritedMediaQuery: true,
+      // locale: DevicePreview.locale(context),
+      // builder: DevicePreview.appBuilder,
+
       title: 'Zenesus',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
       darkTheme:ThemeData.dark(),
-      home: const MyLoginPage(incorrect: false,),
+      home: const TestingScreen(),
     );
   }
 }

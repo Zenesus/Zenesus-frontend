@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zenesus/screens/courses.dart';
-
+import 'package:zenesus/widgets/appbar.dart';
 
 class Highschool{
   late int id;
@@ -101,40 +101,11 @@ class _Login extends State<MyLoginPage> {
       Future.delayed(Duration.zero, () => showAlert(context));
     }
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title:
-          const Text("Zenesus",
-            style:
-            TextStyle(
-                fontSize: 25,
-                letterSpacing: 7,
-                fontWeight: FontWeight.bold,
-                fontFamily: "Merriweather",
-
-              ),
-        ),
-      ),
-      /*
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                content: Text(passwordController.text),
-              );
-            },
-          );
-        },
-        tooltip: 'Show me the value!',
-        child: const Icon(Icons.text_fields),
-      ),
-      */
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            LoginAppBar(),
             Expanded(
                 flex: 3,
                 child:Image.asset('assets/open-book.png',

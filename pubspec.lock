@@ -57,6 +57,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  device_frame:
+    dependency: transitive
+    description:
+      name: device_frame
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
+  device_preview:
+    dependency: "direct dev"
+    description:
+      name: device_preview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   fake_async:
     dependency: transitive
     description:
@@ -90,6 +104,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -100,6 +119,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  freezed_annotation:
+    dependency: transitive
+    description:
+      name: freezed_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   http:
     dependency: "direct main"
     description:
@@ -114,6 +140,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.17.0"
   js:
     dependency: transitive
     description:
@@ -121,6 +154,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.4"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.6.0"
   lints:
     dependency: transitive
     description:
@@ -149,6 +189,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   path:
     dependency: transitive
     description:
@@ -198,6 +245,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.0.3"
   shared_preferences:
     dependency: "direct dev"
     description:
@@ -287,6 +341,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "20.2.39"
+  syncfusion_flutter_gauges:
+    dependency: "direct dev"
+    description:
+      name: syncfusion_flutter_gauges
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "20.2.39"
   term_glyph:
     dependency: transitive
     description:
